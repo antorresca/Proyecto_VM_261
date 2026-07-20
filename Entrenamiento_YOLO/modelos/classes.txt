@@ -1,0 +1,9 @@
+mesa
+silla
+computador
+impresora 3d
+tablero
+bombillo
+ventana
+estante
+puerta

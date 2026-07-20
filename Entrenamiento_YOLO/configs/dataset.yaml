@@ -1,0 +1,13 @@
+path: data
+train: images/train
+val: images/val
+names:
+  0: mesa
+  1: silla
+  2: computador
+  3: impresora 3d
+  4: tablero
+  5: bombillo
+  6: ventana
+  7: estante
+  8: puerta
