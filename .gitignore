@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.idea/
+.vscode/
+*.svo
+*.svo2
+*.ply
+Entrenamiento_YOLO/data/
+Entrenamiento_YOLO/runs/
+Pipeline_3D/best.pt
+Pipeline_3D/Proyecto_ZED_P1/
+**/weights/last.pt
