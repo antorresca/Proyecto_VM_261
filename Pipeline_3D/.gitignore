@@ -1,0 +1,22 @@
+# Entornos y caché de Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Archivos pesados que NO van al repo
+*.svo
+*.svo2
+*.ply
+*.npz
+*.mp4
+best.pt
+*.pt
+
+# Salidas de corridas locales (se regeneran con el pipeline)
+etiquetado/
+alzado_*.png
+demo_muestra.png
+
+# Los ejemplos incluidos en ejemplos/ SÍ se versionan
+!ejemplos/*

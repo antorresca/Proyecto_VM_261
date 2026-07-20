@@ -1,0 +1,8 @@
+# Módulo P1 — Geometría 3D y Mapeo (ZED2)
+# NOTA: pyzed NO se instala con pip desde aquí: viene con el ZED SDK
+# (ver README, sección "Instalación", paso 2).
+
+numpy
+opencv-python
+open3d
+ultralytics
