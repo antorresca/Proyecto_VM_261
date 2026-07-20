@@ -4,10 +4,7 @@ Código del módulo de **geometría 3D / mapeo** del proyecto de detección de o
 
 1. Un **mapa 3D** del entorno (nube de puntos fusionada del recorrido).
 2. **Cajas 3D orientadas (OBB)** por objeto detectado: clase, posición, dimensiones y orientación en coordenadas del mapa.
-3. Una **consolidación multivista**: agrupa las detecciones de todos los frames por objeto físico y reporta dimensiones robustas.
-4. Una **validación** de las dimensiones estimadas contra medidas con cinta métrica.
-
-> **Encuadre importante:** el sistema hace *mapeo/reconstrucción 3D*. Las dimensiones que reporta son una **estimación derivada del mapa (~10–15 % de error)**, no una medición certificada.
+3. Una **consolidación multivista**: agrupa las detecciones de todos los frames por objeto físico.
 
 ## Estructura del repositorio
 
@@ -22,7 +19,6 @@ Código del módulo de **geometría 3D / mapeo** del proyecto de detección de o
 ├── limpieza_obb.py             # Librería usada por deteccion_obb (limpieza + OBB al plano)
 ├── vista_lado.py               # Paso 4 (diagnóstico): alzado del mapa + detecciones
 ├── consolidar_detecciones.py   # Paso 5: agrupar detecciones por objeto físico
-├── validar_dims.py             # Paso 6: comparar dims estimadas vs cinta métrica
 ├── video_demo.py               # Extra: MP4 demo (video etiquetado + mapa 3D con cajas)
 └── ejemplos/                   # Salidas reales de referencia (formato de los CSV/PNG)
     ├── detecciones_3d.csv
@@ -30,7 +26,7 @@ Código del módulo de **geometría 3D / mapeo** del proyecto de detección de o
     └── vista_arriba.png
 ```
 
-Todos los scripts se ejecutan **desde esta carpeta** (usan rutas relativas entre sí: `deteccion_obb.py` importa `limpieza_obb.py`, así que no los separes).
+Todos los scripts se ejecutan **desde esta carpeta** (usan rutas relativas entre sí: `deteccion_obb.py` importa `limpieza_obb.py`).
 
 **Salidas:** los scripts escriben sus resultados en `~/Proyecto_ZED_P1/` (se crea sola en el home del usuario, p. ej. `C:\Users\<tu_usuario>\Proyecto_ZED_P1\`). Ahí quedan `mapa_manual.ply`, `mapa_limpio.ply`, `detecciones_3d.csv`, `objetos_consolidados.csv`, `vista_arriba.png`, etc.
 
@@ -38,10 +34,10 @@ Todos los scripts se ejecutan **desde esta carpeta** (usan rutas relativas entre
 
 - **Windows 10/11** con **GPU NVIDIA** (el ZED SDK requiere CUDA).
 - **ZED SDK 5.x** (probado con 5.3.0) — incluye CUDA y la API de Python `pyzed`.
-- **Python 3.10+**.
+- **Python entre 3.10 y 3.12**.
 - Archivos que **no** están en el repo (por tamaño):
-  - una grabación `.svo` / `.svo2` hecha con la ZED2 (módulo de captura del equipo);
-  - el modelo entrenado `best.pt` (módulo de dataset/entrenamiento del equipo).
+  - una grabación `.svo` / `.svo2` hecha con la ZED2 ;
+  - el modelo entrenado `best.pt`.
 
 ## Instalación
 
@@ -89,12 +85,6 @@ python vista_lado.py mapa_limpio.ply detecciones_3d.csv
 :: 5. Consolidar: de ~2000 detecciones a la lista de objetos físicos
 python consolidar_detecciones.py --sin-clases ventana --z-max 2.0 --radio 0.6 --min-det 5 --al-piso silla mesa estante --ver mapa_limpio.ply
 
-:: 6. Validación contra cinta métrica (dos pasos)
-python validar_dims.py --plantilla --clases silla mesa estante
-::    -> llenar medidas_reales.csv EN CENTIMETROS y luego:
-python validar_dims.py
-```
-
 Cada script acepta `--help` con la descripción completa de sus opciones.
 
 ### Resultado de referencia
@@ -119,6 +109,3 @@ Sobre una grabación del laboratorio (`--cada 3 --mundo`): **2 164 detecciones p
 - En sesiones de escritorio remoto los visores 3D (OpenGL) pueden fallar; el pipeline y los PNG se generan igual (`--sin-visor`, sin `--ver`, `--guardar-jpg`).
 - Si las cajas "flotan" sobre el piso, corre `vista_lado.py`: detecta si el origen del mundo no quedó en el piso e imprime los flags corregidos.
 
-## Créditos
-
-Módulo P1 (geometría 3D y mapeo) del proyecto de detección 3D con ZED2. Los otros módulos del equipo aportan la captura/validación (P2) y el dataset + entrenamiento de YOLO (P3, `best.pt`).
